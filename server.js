@@ -29,6 +29,6 @@ mongoose.connection.on('connected', () =>
 )
 mongoose.connection.on('disconnected', () => console.log('mongo disconnected'))
 
-app.listen( PORT, () => {
-    console.log(`Listening on PORT ${PORT}`);
-})
+app.listen(PORT, () => {
+console.log( ':cherries::lemon:Listening on port:kiwifruit::watermelon::', PORT)
+});
