@@ -2,6 +2,16 @@ const express = require('express')
 const recipes = express.Router()
 
 const Recipe = require("../models/recipe.js")
+const recipeSeed = require('../models/recipe_seed.js')
+
+
+
+recipes.get('/seed', (req, res) => {
+  Recipe.insertMany(recipeSeed, (error, manyRecipes) => {
+    res.redirect('/recipes')
+  })
+    console.log("seeded");
+})
 
 recipes.get('/', (req, res) => {
   // res.send('index')
@@ -41,6 +51,11 @@ recipes.delete('/:id', (req, res) => {
       res.json(foundRecipes)
     })
   })
+})
+
+recipes.get('/dropcollection', (req, res) => {
+  Recipe.collection.drop()
+  res.redirect('/recipes')
 })
 
 module.exports = recipes
