@@ -76,7 +76,7 @@ class App extends React.Component {
           <br />
           <input type="submit" value="Create New Recipe" />
         </form>
-        <h2>List of Recipes</h2>
+        <h2>List of MaMa's Recipes</h2>
         <ul>
           {this.state.recipes.map((recipe) => {
             return (
