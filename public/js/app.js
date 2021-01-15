@@ -55,9 +55,9 @@ class App extends React.Component {
 
   render = () => {
     return (
-      <div>
+      <div className="container">
         <h2>Create A New Recipe</h2>
-        <form onSubmit={this.handleSubmit}>
+        <form className="create" onSubmit={this.handleSubmit}>
           <label htmlFor="name">Name</label>
           <br />
           <input type="text" id="name" onChange={this.handleChange} value={this.state.name} />

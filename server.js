@@ -15,8 +15,8 @@ const MONGODB_URI = process.env.MONGODB_URI
 app.use(express.json())
 app.use(express.static("public"))
 
-// const recipesController = require('./controllers/recipes_controller.js')
-// app.use('/recipes', recipesController)
+const recipesController = require('./controllers/recipes_controller.js')
+app.use('/recipes', recipesController)
 
 
 //===================
