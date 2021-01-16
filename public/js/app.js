@@ -8,6 +8,14 @@ class App extends React.Component {
     recipe: {},
   };
 
+  deleteRecipe = (event) => {
+    axios.delete("/recipes/" + event.target.value).then((response) => {
+      this.setState({
+        recipes: response.data,
+      });
+    });
+  };
+
   updateRecipe = (event) => {
     event.preventDefault();
     const id = event.target.id;
@@ -37,14 +45,6 @@ class App extends React.Component {
         instructions: "",
       })
     );
-  };
-
-  deleteRecipe = (event) => {
-    axios.delete("/recipes/" + event.target.value).then((response) => {
-      this.setState({
-        recipes: response.data,
-      });
-    });
   };
 
   componentDidMount = () => {
@@ -104,7 +104,12 @@ class App extends React.Component {
         <br />
         <h2>List of MaMa's Recipes</h2>
         {this.state.recipes.length > 0 ? (
-          <Carousel recipes={this.state.recipes} />
+          <Carousel
+            recipes={this.state.recipes}
+            update={this.updateRecipe}
+            delete={this.deleteRecipe}
+            change={this.handleChange}
+          />
         ) : null}
       </div>
     );
@@ -116,6 +121,9 @@ class Carousel extends React.Component {
     recipe: this.props.recipes[0],
     currentIndex: 0,
     recipes: this.props.recipes,
+    delete: this.props.delete,
+    update: this.props.update,
+    change: this.props.change,
   };
 
   nextIndex = () => {
@@ -160,19 +168,23 @@ class Carousel extends React.Component {
           <img src={this.state.recipe.image} />
           <h2>{this.state.recipe.name}</h2>
           <li key={this.state.recipe._id}>
-            <button value={this.state.recipe._id} onClick={this.deleteRecipe}>
+            <button value={this.state.recipe._id} onClick={this.state.delete}>
               DELETE
             </button>
             <details>
+              <summary>Instructions</summary>
+              <textarea>{this.state.recipe.instructions}</textarea>
+            </details>
+            <details>
               <summary>Edit this Recipe</summary>
-              <form id={this.state.recipe._id} onSubmit={this.updateRecipe}>
+              <form id={this.state.recipe._id} onSubmit={this.state.edit}>
                 <label htmlFor="name">Name</label>
                 <br />
                 <input
                   type="text"
                   placeholder={this.state.recipe.name}
                   id="name"
-                  onChange={this.handleChange}
+                  onChange={this.state.change}
                 />
                 <br />
                 <label htmlFor="image">Image</label>
@@ -181,7 +193,7 @@ class Carousel extends React.Component {
                   type="text"
                   placeholder={this.state.recipe.image}
                   id="image"
-                  onChange={this.handleChange}
+                  onChange={this.state.change}
                 />
                 <br />
                 <label htmlFor="ingredients">Ingredients</label>
@@ -190,7 +202,7 @@ class Carousel extends React.Component {
                   type="text"
                   placeholder={this.state.recipe.ingredients}
                   id="ingredients"
-                  onChange={this.handleChange}
+                  onChange={this.state.change}
                 />
                 <br />
                 <label htmlFor="image">Instructions</label>
@@ -199,7 +211,7 @@ class Carousel extends React.Component {
                   type="text"
                   placeholder={this.state.recipe.instructions}
                   id="instructions"
-                  onChange={this.handleChange}
+                  onChange={this.state.change}
                 />
                 <br />
                 <input type="submit" value="Update Recipe" />

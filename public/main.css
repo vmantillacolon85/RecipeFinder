@@ -37,6 +37,10 @@ li {
   padding: 2%;
   box-shadow: 2px 2px 4px whitesmoke;
 }
+textarea {
+  resize: none;
+  width: 200px;
+}
 button,
 #submit {
   font-family: "Amatic SC", cursive;
