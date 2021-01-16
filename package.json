@@ -4,6 +4,9 @@
   "engines": {
     "node": "v14.15.0"
   },
+  "scripts": {
+    "start": "node server.js"
+  },
   "description": "",
   "main": "server.js",
   "scripts": {
