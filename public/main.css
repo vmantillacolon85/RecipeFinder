@@ -1,12 +1,16 @@
 body {
   margin: auto;
   text-align: center;
-  background-color: rgb(154, 93, 155);
-  font-family: 'Alice', sans-serif;
+  background-color: wheat;
+  font-size: 15px;
+  font-family: 'Amatic SC', cursive;
+}
+.create, #submit{
+  margin: 2%;
 }
 h1 {
   text-align: center;
-  text-shadow: 1px 1px 2px gold;
+  text-shadow: 1px 1px 2px #bfd9d9;
 }
 img {
   width: 200px;
@@ -22,33 +26,26 @@ li {
   flex-flow: column;
   justify-content: space-between;
   align-items: center;
-  flex-basis: 28%;
+  font-size: 15px;
+  flex-basis: 25%;
   margin: 2%;
   background: #12121212;
   box-sizing: border-box;
   padding: 2%;
-  box-shadow: 2px 2px 4px #c2d674;
+  box-shadow: 2px 2px 4px whitesmoke;
 }
-button {
-  background: pink;
+button, #submit {
+  font-family: 'Amatic SC', cursive;
+  border-radius: 5%;
+  background: #89b0b0;
   padding: 0.5em;
   margin: 0.5em;
-}
-.add{
-  color: #4c1059;
 }
 form{
   color: white;
   margin: 2%;
   padding: 2%;
 }
-#updateBtn, #deleteBtn{
-  font-family: 'Alice', sans-serif;
-  border-radius: 40%;
-  background-color: black;
-  color: white;
-  margin: 5px;
-}
-.edit{
-  font-family: 'Alice', sans-serif;
+.img-carousel img:first-of-type {
+  display: block;
 }

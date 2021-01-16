@@ -1,4 +1,3 @@
-// console.log("recipes");
 
 class App extends React.Component {
     state = {
@@ -7,13 +6,13 @@ class App extends React.Component {
       ingredients: "",
       instructions: "",
       recipes: [],
+      recipe: {},
   }
     handleChange = event => {
       this.setState({ [event.target.id]: event.target.value })
   }
     handleSubmit = event => {
       event.preventDefault()
-      // console.log(this.state)
       axios
         .post("/recipes", this.state)
         .then((response) =>
@@ -29,6 +28,20 @@ class App extends React.Component {
               recipes: response.data,
           })
       })
+  }
+
+  nextIndex = () => {
+    const newIndex = this.state.recipes.index+1
+    this.setState({
+      recipe: this.state.recipes[newIndex],
+    })
+  }
+
+  prevIndex = () => {
+    const newIndex = this.state.recipes.index-1
+    this.setState({
+      recipe: this.state.recipes[newIndex],
+    })
   }
 
   updateRecipe = (event) => {
@@ -74,18 +87,24 @@ class App extends React.Component {
           <br />
           <input type="text" id="instructions" onChange={this.handleChange} value={this.state.instructions} />
           <br />
-          <input type="submit" value="Create New Recipe" />
+          <input type="submit" id="submit" value="Create New Recipe" />
         </form>
+        <br />
         <h2>List of MaMa's Recipes</h2>
+        <div className="img-carousel">
+          <button onClick={this.nextIndex}>Next</button>
+          <button onClick={this.prevIndex}>Prev</button>
+        </div>
         <ul>
           {this.state.recipes.map((recipe) => {
             return (
-              <li key={recipe._id}>
-                {recipe.name}
-                <img src={recipe.image} alt={recipe.name} />
-                <button value={recipe._id} onClick={this.deleteRecipe}>
-                  DELETE
-                </button>
+              <div className="recipe-card">
+                  <li key={recipe._id}>
+                    {recipe.name}
+                    <img src={recipe.image} alt={recipe.name} />
+                    <button value={recipe._id} onClick={this.deleteRecipe}>
+                      DELETE
+                    </button>
                 <details>
                   <summary>Edit this Recipe</summary>
                   <form id={recipe._id} onSubmit={this.updateRecipe}>
@@ -117,10 +136,12 @@ class App extends React.Component {
                   </form>
                 </details>
               </li>
-            )
-          })}
-        </ul>
-      </div>
+            </div>
+          )
+        })
+      }
+      </ul>
+    </div>
     )
   }
 }
