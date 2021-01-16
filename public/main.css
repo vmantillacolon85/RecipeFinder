@@ -3,10 +3,13 @@ body {
   text-align: center;
   background-color: wheat;
   font-size: 15px;
-  font-family: 'Amatic SC', cursive;
+  font-family: "Amatic SC", cursive;
 }
-.create, #submit{
-  margin: 2%;
+.create {
+  height: 350px;
+  width: 40%;
+  margin-left: 30%;
+  border: 2px dashed black;
 }
 h1 {
   text-align: center;
@@ -34,18 +37,20 @@ li {
   padding: 2%;
   box-shadow: 2px 2px 4px whitesmoke;
 }
-button, #submit {
-  font-family: 'Amatic SC', cursive;
+button,
+#submit {
+  font-family: "Amatic SC", cursive;
   border-radius: 5%;
   background: #89b0b0;
   padding: 0.5em;
   margin: 0.5em;
 }
-form{
-  color: white;
+form {
+  color: #425454;
   margin: 2%;
   padding: 2%;
 }
-.img-carousel img:first-of-type {
-  display: block;
+.card {
+  display: inline-block;
+  background-color: lemonchiffon;
 }

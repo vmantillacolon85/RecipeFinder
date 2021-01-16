@@ -1,149 +1,215 @@
-
 class App extends React.Component {
-    state = {
-      name: "",
-      image: "",
-      ingredients: "",
-      instructions: "",
-      recipes: [],
-      recipe: {},
-  }
-    handleChange = event => {
-      this.setState({ [event.target.id]: event.target.value })
-  }
-    handleSubmit = event => {
-      event.preventDefault()
-      axios
-        .post("/recipes", this.state)
-        .then((response) =>
-          // console.log(response));
-          this.setState({ recipes: response.data, name: "", image: "", ingredients: "", instructions: "" })
-      )
-  }
-
-  deleteRecipe = (event) => {
-      axios.delete("/recipes/" +
-      event.target.value).then((response) => {
-          this.setState({
-              recipes: response.data,
-          })
-      })
-  }
-
-  nextIndex = () => {
-    const newIndex = this.state.recipes.index+1
-    this.setState({
-      recipe: this.state.recipes[newIndex],
-    })
-  }
-
-  prevIndex = () => {
-    const newIndex = this.state.recipes.index-1
-    this.setState({
-      recipe: this.state.recipes[newIndex],
-    })
-  }
+  state = {
+    name: "",
+    image: "",
+    ingredients: "",
+    instructions: "",
+    recipes: [],
+    recipe: {},
+  };
 
   updateRecipe = (event) => {
-      event.preventDefault()
-      const id = event.target.id
-      axios.put("/recipes/" + id, this.state).then(response => {
-          this.setState({
-              recipes: response.data,
-              name: "",
-              image: "",
-              ingredients: "",
-              instructions: "",
-          })
+    event.preventDefault();
+    const id = event.target.id;
+    axios.put("/recipes/" + id, this.state).then((response) => {
+      this.setState({
+        recipes: response.data,
+        name: "",
+        image: "",
+        ingredients: "",
+        instructions: "",
+      });
+    });
+  };
+
+  handleChange = (event) => {
+    this.setState({ [event.target.id]: event.target.value });
+  };
+  handleSubmit = (event) => {
+    event.preventDefault();
+    axios.post("/recipes", this.state).then((response) =>
+      // console.log(response));
+      this.setState({
+        recipes: response.data,
+        name: "",
+        image: "",
+        ingredients: "",
+        instructions: "",
       })
-  }
+    );
+  };
+
+  deleteRecipe = (event) => {
+    axios.delete("/recipes/" + event.target.value).then((response) => {
+      this.setState({
+        recipes: response.data,
+      });
+    });
+  };
 
   componentDidMount = () => {
-      axios.get("/recipes").then(response => {
-        this.setState({
-          recipes: response.data
-        })
-      })
-  }
+    axios.get("/recipes").then((response) => {
+      this.setState({
+        recipes: response.data,
+      });
+    });
+  };
 
   render = () => {
     return (
       <div className="container">
-        <h2>Create A New Recipe</h2>
-        <form className="create" onSubmit={this.handleSubmit}>
-          <label htmlFor="name">Name</label>
-          <br />
-          <input type="text" id="name" onChange={this.handleChange} value={this.state.name} />
-          <br />
-          <label htmlFor="image">Image</label>
-          <br />
-          <input type="text" id="image" onChange={this.handleChange} value={this.state.image} />
-          <br />
-          <label htmlFor="name">Ingredients</label>
-          <br />
-          <input type="text" id="ingredients" onChange={this.handleChange} value={this.state.ingredients} />
-          <br />
-          <label htmlFor="image">instructions</label>
-          <br />
-          <input type="text" id="instructions" onChange={this.handleChange} value={this.state.instructions} />
-          <br />
-          <input type="submit" id="submit" value="Create New Recipe" />
-        </form>
+        <h2>Add A New Recipe</h2>
+        <details>
+          <summary>Information</summary>
+          <form className="create" onSubmit={this.handleSubmit}>
+            <label htmlFor="name">Name</label>
+            <br />
+            <input
+              type="text"
+              id="name"
+              onChange={this.handleChange}
+              value={this.state.name}
+            />
+            <br />
+            <label htmlFor="image">Image</label>
+            <br />
+            <input
+              type="text"
+              id="image"
+              onChange={this.handleChange}
+              value={this.state.image}
+            />
+            <br />
+            <label htmlFor="name">Ingredients</label>
+            <br />
+            <input
+              type="text"
+              id="ingredients"
+              onChange={this.handleChange}
+              value={this.state.ingredients}
+            />
+            <br />
+            <label htmlFor="instructions">instructions</label>
+            <br />
+            <input
+              type="text"
+              id="instructions"
+              onChange={this.handleChange}
+              value={this.state.instructions}
+            />
+            <br />
+            <input type="submit" id="submit" value="Create New Recipe" />
+          </form>
+        </details>
         <br />
         <h2>List of MaMa's Recipes</h2>
-        <div className="img-carousel">
-          <button onClick={this.nextIndex}>Next</button>
-          <button onClick={this.prevIndex}>Prev</button>
-        </div>
-        <ul>
-          {this.state.recipes.map((recipe) => {
-            return (
-              <div className="recipe-card">
-                  <li key={recipe._id}>
-                    {recipe.name}
-                    <img src={recipe.image} alt={recipe.name} />
-                    <button value={recipe._id} onClick={this.deleteRecipe}>
-                      DELETE
-                    </button>
-                <details>
-                  <summary>Edit this Recipe</summary>
-                  <form id={recipe._id} onSubmit={this.updateRecipe}>
-                    <label htmlFor="name">Name</label>
-                    <br />
-                    <input
-                      type="text" id="name"
-                      onChange={this.handleChange} />
-                    <label htmlFor="image">Image</label>
-                    <br />
-                    <input
-                      type="text"
-                      id="image"
-                      onChange={this.handleChange}/>
-                    <br />
-                    <label htmlFor="name">Ingredients</label>
-                    <br />
-                    <input
-                      type="text" id="ingredients"
-                      onChange={this.handleChange} />
-                    <label htmlFor="image">Instructions</label>
-                    <br />
-                    <input
-                      type="text"
-                      id="instructions"
-                      onChange={this.handleChange}/>
-                    <br />
-                    <input type="submit" value="Update Recipe" />
-                  </form>
-                </details>
-              </li>
-            </div>
-          )
-        })
-      }
-      </ul>
-    </div>
-    )
-  }
+        {this.state.recipes.length > 0 ? (
+          <Carousel recipes={this.state.recipes} />
+        ) : null}
+      </div>
+    );
+  };
 }
 
-ReactDOM.render(<App></App>, document.querySelector('main'))
+class Carousel extends React.Component {
+  state = {
+    recipe: this.props.recipes[0],
+    currentIndex: 0,
+    recipes: this.props.recipes,
+  };
+
+  nextIndex = () => {
+    if (this.state.currentIndex === this.props.recipes.length - 1) {
+      this.setState({
+        recipe: this.props.recipes[0],
+        currentIndex: 0,
+      });
+    } else {
+      this.setState({
+        recipe: this.props.recipes[this.state.currentIndex + 1],
+        currentIndex: this.state.currentIndex + 1,
+      });
+    }
+  };
+
+  prevIndex = () => {
+    if (this.state.currentIndex === 0) {
+      this.setState({
+        recipe: this.props.recipes[this.props.recipes.length - 1],
+        currentIndex: this.props.recipes.length - 1,
+      });
+    }
+    this.setState({
+      recipe: this.props.recipes[this.state.currentIndex - 1],
+      currentIndex: this.state.currentIndex - 1,
+    });
+  };
+
+  render = () => {
+    return (
+      <div className="carousel">
+        <div className="btns">
+          <button onClick={this.prevIndex} id="prevbtn">
+            Prev
+          </button>
+          <button onClick={this.nextIndex} id="nextbtn">
+            Next
+          </button>
+        </div>
+        <div className="card">
+          <img src={this.state.recipe.image} />
+          <h2>{this.state.recipe.name}</h2>
+          <li key={this.state.recipe._id}>
+            <button value={this.state.recipe._id} onClick={this.deleteRecipe}>
+              DELETE
+            </button>
+            <details>
+              <summary>Edit this Recipe</summary>
+              <form id={this.state.recipe._id} onSubmit={this.updateRecipe}>
+                <label htmlFor="name">Name</label>
+                <br />
+                <input
+                  type="text"
+                  placeholder={this.state.recipe.name}
+                  id="name"
+                  onChange={this.handleChange}
+                />
+                <br />
+                <label htmlFor="image">Image</label>
+                <br />
+                <input
+                  type="text"
+                  placeholder={this.state.recipe.image}
+                  id="image"
+                  onChange={this.handleChange}
+                />
+                <br />
+                <label htmlFor="ingredients">Ingredients</label>
+                <br />
+                <input
+                  type="text"
+                  placeholder={this.state.recipe.ingredients}
+                  id="ingredients"
+                  onChange={this.handleChange}
+                />
+                <br />
+                <label htmlFor="image">Instructions</label>
+                <br />
+                <input
+                  type="text"
+                  placeholder={this.state.recipe.instructions}
+                  id="instructions"
+                  onChange={this.handleChange}
+                />
+                <br />
+                <input type="submit" value="Update Recipe" />
+              </form>
+            </details>
+          </li>
+        </div>
+      </div>
+    );
+  };
+}
+
+ReactDOM.render(<App></App>, document.querySelector("main"));
