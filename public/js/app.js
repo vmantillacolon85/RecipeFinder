@@ -167,57 +167,63 @@ class Carousel extends React.Component {
         <div className="card">
           <img src={this.state.recipe.image} />
           <h2>{this.state.recipe.name}</h2>
-          <li key={this.state.recipe._id}>
-            <button value={this.state.recipe._id} onClick={this.state.delete}>
-              DELETE
-            </button>
-            <details>
-              <summary>Instructions</summary>
-              <textarea>{this.state.recipe.instructions}</textarea>
-            </details>
-            <details>
-              <summary>Edit this Recipe</summary>
-              <form id={this.state.recipe._id} onSubmit={this.state.edit}>
-                <label htmlFor="name">Name</label>
-                <br />
-                <input
-                  type="text"
-                  placeholder={this.state.recipe.name}
-                  id="name"
-                  onChange={this.state.change}
-                />
-                <br />
-                <label htmlFor="image">Image</label>
-                <br />
-                <input
-                  type="text"
-                  placeholder={this.state.recipe.image}
-                  id="image"
-                  onChange={this.state.change}
-                />
-                <br />
-                <label htmlFor="ingredients">Ingredients</label>
-                <br />
-                <input
-                  type="text"
-                  placeholder={this.state.recipe.ingredients}
-                  id="ingredients"
-                  onChange={this.state.change}
-                />
-                <br />
-                <label htmlFor="image">Instructions</label>
-                <br />
-                <input
-                  type="text"
-                  placeholder={this.state.recipe.instructions}
-                  id="instructions"
-                  onChange={this.state.change}
-                />
-                <br />
-                <input type="submit" value="Update Recipe" />
-              </form>
-            </details>
-          </li>
+          <details>
+            <summary> More Info </summary>
+            <li key={this.state.recipe._id}>
+              <details>
+                <summary>Instructions</summary>
+                <textarea>{this.state.recipe.instructions}</textarea>
+              </details>
+              <details>
+                <summary>Edit this Recipe</summary>
+                <form id={this.state.recipe._id} onSubmit={this.state.edit}>
+                  <label htmlFor="name">Name</label>
+                  <br />
+                  <input
+                    type="text"
+                    placeholder={this.state.recipe.name}
+                    id="name"
+                    onChange={this.state.change}
+                  />
+                  <br />
+                  <label htmlFor="image">Image</label>
+                  <br />
+                  <input
+                    type="text"
+                    placeholder={this.state.recipe.image}
+                    id="image"
+                    onChange={this.state.change}
+                  />
+                  <br />
+                  <label htmlFor="ingredients">Ingredients</label>
+                  <br />
+                  <input
+                    type="text"
+                    placeholder={this.state.recipe.ingredients}
+                    id="ingredients"
+                    onChange={this.state.change}
+                  />
+                  <br />
+                  <label htmlFor="image">Instructions</label>
+                  <br />
+                  <input
+                    type="text"
+                    placeholder={this.state.recipe.instructions}
+                    id="instructions"
+                    onChange={this.state.change}
+                  />
+                  <br />
+                  <input type="submit" value="Update Recipe" />
+                </form>
+                <button
+                  value={this.state.recipe._id}
+                  onClick={this.state.delete}
+                >
+                  DELETE
+                </button>
+              </details>
+            </li>
+          </details>
         </div>
       </div>
     );

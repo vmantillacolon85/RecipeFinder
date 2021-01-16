@@ -55,6 +55,7 @@ form {
   padding: 2%;
 }
 .card {
+  border: 3px double whitesmoke;
   display: inline-block;
   background-color: lemonchiffon;
 }
