@@ -1,12 +1,15 @@
 {
   "name": "recipefinder",
   "version": "1.0.0",
-  "description": "",
-  "main": "server.js",
+  "engines": {
+    "node": "v14.15.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
+  "description": "",
+  "main": "server.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/vmantillacolon85/RecipeFinder.git"
