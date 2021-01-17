@@ -8,29 +8,8 @@ class App extends React.Component {
     recipe: {},
   };
 
-  deleteRecipe = (event) => {
-    axios.delete("/recipes/" + event.target.value).then((response) => {
-      this.setState({
-        recipes: response.data,
-      });
-    });
-  };
-
-  updateRecipe = (event) => {
-    event.preventDefault();
-    const id = event.target.id;
-    axios.put("/recipes/" + id, this.state).then((response) => {
-      this.setState({
-        recipes: response.data,
-        name: "",
-        image: "",
-        ingredients: "",
-        instructions: "",
-      });
-    });
-  };
-
   handleChange = (event) => {
+    console.log("anything");
     this.setState({ [event.target.id]: event.target.value });
   };
   handleSubmit = (event) => {
@@ -105,6 +84,7 @@ class App extends React.Component {
         <h2>List of MaMa's Recipes</h2>
         {this.state.recipes.length > 0 ? (
           <Carousel
+            appState={this.state}
             recipes={this.state.recipes}
             update={this.updateRecipe}
             delete={this.deleteRecipe}
@@ -121,9 +101,35 @@ class Carousel extends React.Component {
     recipe: this.props.recipes[0],
     currentIndex: 0,
     recipes: this.props.recipes,
-    delete: this.props.delete,
-    update: this.props.update,
+    // delete: this.props.delete,
+    // update: this.props.update,
     change: this.props.change,
+  };
+
+  deleteRecipe = (event) => {
+    axios.delete("/recipes/" + event.target.value).then((response) => {
+      this.setState({
+        recipes: response.data,
+      });
+    });
+    window.location.reload();
+  };
+
+  updateRecipe = (event) => {
+    // console.log(event);
+    event.preventDefault();
+    console.log("these", this.props.appState);
+    const id = event.target.id;
+    axios.put("/recipes/" + id, this.props.appState).then((response) => {
+      this.setState({
+        recipes: response.data,
+        name: "",
+        image: "",
+        ingredients: "",
+        instructions: "",
+      });
+    });
+    window.location.reload();
   };
 
   nextIndex = () => {
@@ -176,14 +182,14 @@ class Carousel extends React.Component {
               </details>
               <details>
                 <summary>Edit this Recipe</summary>
-                <form id={this.state.recipe._id} onSubmit={this.state.edit}>
+                <form id={this.state.recipe._id} onSubmit={this.updateRecipe}>
                   <label htmlFor="name">Name</label>
                   <br />
                   <input
                     type="text"
                     placeholder={this.state.recipe.name}
                     id="name"
-                    onChange={this.state.change}
+                    onChange={this.props.change}
                   />
                   <br />
                   <label htmlFor="image">Image</label>
@@ -192,7 +198,7 @@ class Carousel extends React.Component {
                     type="text"
                     placeholder={this.state.recipe.image}
                     id="image"
-                    onChange={this.state.change}
+                    onChange={this.props.change}
                   />
                   <br />
                   <label htmlFor="ingredients">Ingredients</label>
@@ -201,7 +207,7 @@ class Carousel extends React.Component {
                     type="text"
                     placeholder={this.state.recipe.ingredients}
                     id="ingredients"
-                    onChange={this.state.change}
+                    onChange={this.props.change}
                   />
                   <br />
                   <label htmlFor="image">Instructions</label>
@@ -210,14 +216,14 @@ class Carousel extends React.Component {
                     type="text"
                     placeholder={this.state.recipe.instructions}
                     id="instructions"
-                    onChange={this.state.change}
+                    onChange={this.props.change}
                   />
                   <br />
                   <input type="submit" id="submit" value="Update Recipe" />
                 </form>
                 <button
                   value={this.state.recipe._id}
-                  onClick={this.state.delete}
+                  onClick={this.deleteRecipe}
                 >
                   DELETE
                 </button>
