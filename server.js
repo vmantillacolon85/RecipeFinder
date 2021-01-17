@@ -1,17 +1,27 @@
+//==================
+//  DEPENDENCIES
+//==================
+
 const express = require("express")
 const mongoose = require('mongoose')
-
 const app = express()
 require("dotenv").config()
 const PORT = process.env.PORT
 const MONGODB_URI = process.env.MONGODB_URI
 
+//================
+//  MIDDLEWARE
+//================
 app.use(express.json())
 app.use(express.static("public"))
 
 const recipesController = require('./controllers/recipes_controller.js')
 app.use('/recipes', recipesController)
 
+
+//===================
+//  ERROR & SUCCESS
+//===================
 mongoose.connect(MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,

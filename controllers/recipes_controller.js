@@ -1,20 +1,16 @@
 const express = require('express')
 const recipes = express.Router()
-
 const Recipe = require("../models/recipe.js")
 const recipeSeed = require('../models/recipe_seed.js')
 
-
-
 recipes.get('/seed', (req, res) => {
   Recipe.insertMany(recipeSeed, (error, manyRecipes) => {
-    res.redirect('/recipes')
+    res.redirect('/')
   })
     console.log("seeded");
 })
 
 recipes.get('/', (req, res) => {
-  // res.send('index')
   Recipe.find({}, (error, foundRecipes) => {
       res.json(foundRecipes)
   })

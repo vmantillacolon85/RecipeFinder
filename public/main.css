@@ -1,0 +1,62 @@
+body {
+  margin: auto;
+  text-align: center;
+  background-color: wheat;
+  font-size: 15px;
+  font-family: "Amatic SC", cursive;
+}
+.create {
+  height: 350px;
+  width: 40%;
+  margin-left: 30%;
+  border: 2px dashed whitesmoke;
+}
+h1 {
+  text-align: center;
+  text-shadow: 1px 1px 2px #bfd9d9;
+}
+img {
+  width: 200px;
+  display: block;
+}
+ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+li {
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 15px;
+  flex-basis: 25%;
+  margin: 2%;
+  background: #12121212;
+  box-sizing: border-box;
+  padding: 2%;
+  box-shadow: 2px 2px 4px whitesmoke;
+}
+textarea {
+  resize: none;
+  width: 200px;
+}
+button,
+#submit {
+  font-family: "Amatic SC", cursive;
+  border-radius: 5%;
+  background: #89b0b0;
+  padding: 0.5em;
+  margin: 0.5em;
+}
+form {
+  color: #425454;
+  margin: 2%;
+  padding: 2%;
+}
+.card {
+  border: 3px double whitesmoke;
+  display: inline-block;
+  background-color: lemonchiffon;
+  margin: 5%;
+}
