@@ -190,6 +190,12 @@ class Carousel extends React.Component {
                 </textarea>
               </details>
               <details>
+                <summary>Ingredients</summary>
+                <textarea>
+                  {this.props.recipes[this.state.currentIndex].ingredients}
+                </textarea>
+              </details>
+              <details>
                 <summary>Edit this Recipe</summary>
                 <form
                   id={this.props.recipes[this.state.currentIndex]._id}
