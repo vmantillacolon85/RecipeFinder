@@ -123,7 +123,6 @@ class Carousel extends React.Component {
   state = {
     recipe: this.props.recipes[0],
     currentIndex: 0,
-    // recipes: this.props.recipes,
   };
 
   delete = (event) => {
