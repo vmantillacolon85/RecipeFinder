@@ -146,11 +146,12 @@ class Carousel extends React.Component {
         recipe: this.props.recipes[this.props.recipes.length - 1],
         currentIndex: this.props.recipes.length - 1,
       });
-    }
+    } else {
     this.setState({
       recipe: this.props.recipes[this.state.currentIndex - 1],
       currentIndex: this.state.currentIndex - 1,
-    });
+      });
+    }
   };
 
   render = () => {
