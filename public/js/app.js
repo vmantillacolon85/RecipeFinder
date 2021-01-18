@@ -8,6 +8,30 @@ class App extends React.Component {
     recipe: {},
   };
 
+  deleteRecipe = (event) => {
+    axios.delete("/recipes/" + event.target.value).then((response) => {
+      this.setState({
+        recipes: response.data,
+      });
+    });
+  };
+
+  updateRecipe = (event) => {
+    // debugger;
+    event.preventDefault();
+    const id = event.target.id;
+    axios.put("/recipes/" + id, this.state).then((response) => {
+      // debugger;
+      this.setState({
+        recipes: response.data,
+        name: "",
+        image: "",
+        ingredients: "",
+        instructions: "",
+      });
+    });
+  };
+
   handleChange = (event) => {
     console.log("anything");
     this.setState({ [event.target.id]: event.target.value });
@@ -24,7 +48,6 @@ class App extends React.Component {
         instructions: "",
       })
     );
-    window.location.reload();
   };
 
   componentDidMount = () => {
@@ -85,7 +108,6 @@ class App extends React.Component {
         <h2>List of MaMa's Recipes</h2>
         {this.state.recipes.length > 0 ? (
           <Carousel
-            appState={this.state}
             recipes={this.state.recipes}
             update={this.updateRecipe}
             delete={this.deleteRecipe}
@@ -101,36 +123,19 @@ class Carousel extends React.Component {
   state = {
     recipe: this.props.recipes[0],
     currentIndex: 0,
-    recipes: this.props.recipes,
-    // delete: this.props.delete,
-    // update: this.props.update,
-    change: this.props.change,
+    // recipes: this.props.recipes,
   };
 
-  deleteRecipe = (event) => {
-    axios.delete("/recipes/" + event.target.value).then((response) => {
-      this.setState({
-        recipes: response.data,
-      });
-    });
-    window.location.reload();
+  delete = (event) => {
+    this.props.delete(event);
   };
 
-  updateRecipe = (event) => {
-    // console.log(event);
-    event.preventDefault();
-    console.log("these", this.props.appState);
-    const id = event.target.id;
-    axios.put("/recipes/" + id, this.props.appState).then((response) => {
-      this.setState({
-        recipes: response.data,
-        name: "",
-        image: "",
-        ingredients: "",
-        instructions: "",
-      });
-    });
-    window.location.reload();
+  update = (event) => {
+    this.props.update(event);
+  };
+
+  change = (event) => {
+    this.props.change(event);
   };
 
   nextIndex = () => {
@@ -173,59 +178,72 @@ class Carousel extends React.Component {
           </button>
         </div>
         <div className="card">
-          <img src={this.state.recipe.image} />
-          <h2>{this.state.recipe.name}</h2>
+          <img src={this.props.recipes[this.state.currentIndex].image} />
+          <h2>{this.props.recipes[this.state.currentIndex].name}</h2>
           <details>
             <summary> More Info </summary>
-            <li key={this.state.recipe._id}>
+            <li key={this.props.recipes[this.state.currentIndex]._id}>
               <details>
                 <summary>Instructions</summary>
-                <textarea>{this.state.recipe.instructions}</textarea>
+                <textarea>
+                  {this.props.recipes[this.state.currentIndex].instructions}
+                </textarea>
               </details>
               <details>
                 <summary>Edit this Recipe</summary>
-                <form id={this.state.recipe._id} onSubmit={this.updateRecipe}>
+                <form
+                  id={this.props.recipes[this.state.currentIndex]._id}
+                  onSubmit={(event) => this.update(event)}
+                >
                   <label htmlFor="name">Name</label>
                   <br />
                   <input
                     type="text"
-                    placeholder={this.state.recipe.name}
+                    placeholder={
+                      this.props.recipes[this.state.currentIndex].name
+                    }
                     id="name"
-                    onChange={this.props.change}
+                    onChange={(event) => this.change(event)}
                   />
                   <br />
                   <label htmlFor="image">Image</label>
                   <br />
                   <input
                     type="text"
-                    placeholder={this.state.recipe.image}
+                    placeholder={
+                      this.props.recipes[this.state.currentIndex].image
+                    }
                     id="image"
-                    onChange={this.props.change}
+                    onChange={(event) => this.change(event)}
                   />
                   <br />
                   <label htmlFor="ingredients">Ingredients</label>
                   <br />
                   <input
                     type="text"
-                    placeholder={this.state.recipe.ingredients}
+                    placeholder={
+                      this.props.recipes[this.state.currentIndex].ingredients
+                    }
                     id="ingredients"
-                    onChange={this.props.change}
+                    onChange={(event) => this.change(event)}
                   />
                   <br />
                   <label htmlFor="image">Instructions</label>
                   <br />
                   <input
                     type="text"
-                    placeholder={this.state.recipe.instructions}
+                    placeholder={
+                      this.props.recipes[this.state.currentIndex].instructions
+                    }
                     id="instructions"
-                    onChange={this.props.change}
+                    onChange={(event) => this.change(event)}
                   />
                   <br />
                   <input type="submit" id="submit" value="Update Recipe" />
                 </form>
                 <button
-                  value={this.state.recipe._id}
-                  onClick={this.deleteRecipe}
+                  value={this.props.recipes[this.state.currentIndex]._id}
+                  onClick={(event) => this.delete(event)}
                 >
                   DELETE
                 </button>
