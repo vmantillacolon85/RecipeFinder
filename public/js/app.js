@@ -137,20 +137,6 @@ class Carousel extends React.Component {
     this.props.change(event);
   };
 
-  nextIndex = () => {
-    if (this.state.currentIndex === this.props.recipes.length - 1) {
-      this.setState({
-        recipe: this.props.recipes[0],
-        currentIndex: 0,
-      });
-    } else {
-      this.setState({
-        recipe: this.props.recipes[this.state.currentIndex + 1],
-        currentIndex: this.state.currentIndex + 1,
-      });
-    }
-  };
-
   prevIndex = () => {
     if (this.state.currentIndex === 0) {
       this.setState({
@@ -161,6 +147,20 @@ class Carousel extends React.Component {
       this.setState({
         recipe: this.props.recipes[this.state.currentIndex - 1],
         currentIndex: this.state.currentIndex - 1,
+      });
+    }
+  };
+
+  nextIndex = () => {
+    if (this.state.currentIndex === this.props.recipes.length - 1) {
+      this.setState({
+        recipe: this.props.recipes[0],
+        currentIndex: 0,
+      });
+    } else {
+      this.setState({
+        recipe: this.props.recipes[this.state.currentIndex + 1],
+        currentIndex: this.state.currentIndex + 1,
       });
     }
   };
